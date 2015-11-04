@@ -128,8 +128,8 @@ func NotFoundPage(w http.ResponseWriter, r *http.Request) {
 	mtr.r4xx.Inc()
 	w.Header().Set("Cache-Control", MaxAge10)
 	w.Header().Set("Surrogate-Control", MaxAge10)
-	w.WriteHeader(http.StatusNotFound)
 	w.Header().Set("Content-Type", HtmlContent)
+	w.WriteHeader(http.StatusNotFound)
 	w.Write(error404)
 }
 
