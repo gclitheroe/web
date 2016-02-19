@@ -206,9 +206,18 @@ func (rt *Route) test(m string, s *httptest.Server, t *testing.T) {
 	}
 
 	for _, r := range rt.routes {
-		req, _ := http.NewRequest("GET", s.URL+r.uri, nil)
+		req, err := http.NewRequest("GET", s.URL+r.uri, nil)
+		if err != nil {
+			t.Error(err)
+			continue
+		}
+
 		req.Header.Add("Accept", rt.Accept)
-		res, _ := client.Do(req)
+		res, err := client.Do(req)
+		if err != nil {
+			t.Error(err)
+			continue
+		}
 		defer res.Body.Close()
 
 		if res.StatusCode != rt.Response {
